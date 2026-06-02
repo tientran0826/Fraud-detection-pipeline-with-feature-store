@@ -47,3 +47,33 @@ services:
       - redis
     volumes:
       - .:/app
+
+  minio:
+    build:
+      context: .
+      dockerfile: ./infra/storage/minio/Dockerfile
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    volumes:
+      - minio_data:/data
+
+  mlflow:
+    build:
+      context: .
+      dockerfile: ./infra/tracking/mlflow/Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-minioadmin}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-minioadmin}
+    depends_on:
+      - minio
+
+volumes:
+  minio_data:
