@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:7.0-alpine
+    ports:
+      - "6379:6379"
+    
+  jobmanager:
+    build: 
+      context: .
+      dockerfile: ./infra/compute/flink/Dockerfile
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+    volumes:
+      - .:/opt/flink/usrlib
+
+  taskmanager:
+    build: 
+      context: .
+      dockerfile: ./infra/compute/flink/Dockerfile
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        taskmanager.numberOfTaskSlots: 2
+        taskmanager.memory.process.size: 4096m
+        taskmanager.memory.framework.off-heap.size: 256m
+        taskmanager.memory.task.off-heap.size: 512m
+    volumes:
+      - .:/opt/flink/usrlib
+
+  serving-api:
+    build:
+      context: .
+      dockerfile: ./serving/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    volumes:
+      - .:/app

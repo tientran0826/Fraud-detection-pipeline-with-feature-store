@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+feast[redis]==0.40.1
+
+pandas>=2.2
+numpy<2
