@@ -1,8 +1,8 @@
-# 🎯 Fraud Detection Feature Store Pipeline
+# Fraud Detection Feature Store Pipeline
 
 A production-ready, end-to-end fraud detection system that simulates real-time user behavior, processes streaming data, engineers features in real-time, and serves low-latency fraud predictions. This project demonstrates a complete MLOps pipeline with data simulation, stream processing, feature engineering, model training, and serving.
 
-## 📊 Architecture
+## Architecture
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -40,7 +40,7 @@ Data Simulation (Kafka Producer)
          └─► Prefect Orchestration (workflow automation)
 ```
 
-## ✨ Key Features
+## Key Features
 
 | Feature | Technology | Purpose |
 |---------|-----------|---------|
@@ -53,7 +53,7 @@ Data Simulation (Kafka Producer)
 | **Containerization** | Docker Compose | Production-ready multi-service deployment |
 | **Code Quality** | Pre-commit Hooks | Automatic code formatting & linting |
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 | Component | Technology | Version |
 |-----------|-----------|---------|
@@ -69,7 +69,7 @@ Data Simulation (Kafka Producer)
 | Language | Python | 3.10 |
 | Containerization | Docker Compose | Latest |
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 fraud-detection-feature-store/
@@ -124,7 +124,7 @@ fraud-detection-feature-store/
 └── README.md                         # This file
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -134,7 +134,7 @@ fraud-detection-feature-store/
 * curl (for downloading Flink Kafka connector)
 * 6GB+ available RAM
 
-## 🚀 Setup Instructions
+## Setup Instructions
 
 ### Step 1: Clone & Setup Environment
 
@@ -219,7 +219,7 @@ curl http://localhost:8000/health
 curl http://localhost:8001/health
 ```
 
-## 📖 Usage Examples
+## Usage Examples
 
 ### 1. Check Pipeline Status
 
@@ -313,7 +313,7 @@ docker-compose exec prefect-worker prefect deployment run "fraud-detection-pipel
 docker-compose exec prefect-worker prefect deployment ls
 ```
 
-## 📊 Dashboard URLs
+## Dashboard URLs
 
 | Service | URL | Purpose |
 |---------|-----|---------|
@@ -326,7 +326,7 @@ docker-compose exec prefect-worker prefect deployment ls
 | **Kafka Broker** | localhost:9092 | Kafka message broker |
 | **Redis CLI** | localhost:6379 | Feature store cache |
 
-## 🏛️ System Architecture Deep Dive
+## System Architecture Deep Dive
 
 ### Data Simulation (Kafka Producer)
 - **File**: `infra/compute/data_simulator/producer.py`
@@ -374,7 +374,7 @@ docker-compose exec prefect-worker prefect deployment ls
 - **Deployment**: Use `docker-compose exec prefect-worker prefect deploy` to register flows
 - **Scheduling**: Configure runs via Prefect UI at http://localhost:4200
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run comprehensive test suite
@@ -387,7 +387,7 @@ python -m pytest test/
 pre-commit run --all-files
 ```
 
-## 🔄 Pipeline Flow Example
+## Pipeline Flow Example
 
 ```
 1. Data Simulator generates user event:
@@ -423,7 +423,7 @@ pre-commit run --all-files
    }
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Services not starting?
 ```bash

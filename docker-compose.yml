@@ -27,9 +27,9 @@ services:
     image: redis:7.0-alpine
     ports:
       - "6379:6379"
-    
+
   jobmanager:
-    build: 
+    build:
       context: .
       dockerfile: ./infra/compute/flink/Dockerfile
     ports:
@@ -41,9 +41,9 @@ services:
         jobmanager.rpc.address: jobmanager
     volumes:
       - ./infra/compute/flink:/opt/flink/usrlib
-      
+
   taskmanager:
-    build: 
+    build:
       context: .
       dockerfile: ./infra/compute/flink/Dockerfile
     depends_on:
@@ -135,7 +135,7 @@ services:
       --port 5000
       --backend-store-uri sqlite:///mlflow.db
       --default-artifact-root s3://mlflow
-      --serve-artifacts 
+      --serve-artifacts
     depends_on:
       - minio
 

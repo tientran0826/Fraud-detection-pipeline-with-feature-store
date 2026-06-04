@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.concurrency import run_in_threadpool
-
 from schemas import TrainRequest
 from train import train_model
 

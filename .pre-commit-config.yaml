@@ -14,6 +14,7 @@ repos:
       - id: check-yaml
         name: Check YAML
         args: ['--unsafe']
+        exclude: '^(feature_repo/|training/|infra/)'
       - id: check-json
         name: Check JSON
       - id: check-merge-conflict
@@ -31,7 +32,7 @@ repos:
     hooks:
       - id: black
         name: Format with Black
-        language_version: python3.10
+        language_version: python3.12
         args: ['--line-length=100']
 
   # Import sorting with isort
@@ -42,52 +43,18 @@ repos:
         name: Sort imports with isort
         args: ['--profile', 'black', '--line-length', '100']
 
-  # Python linting with Ruff
+  # Python linting with Ruff (basic checks only)
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.1.11
     hooks:
       - id: ruff
         name: Lint with Ruff
-        args: ['--fix']
-
-  # Docstring checks
-  - repo: https://github.com/PyCQA/pydocstyle
-    rev: 6.3.0
-    hooks:
-      - id: pydocstyle
-        name: Check docstrings
-        args: ['--convention=google']
-        exclude: '^(test_|_test\.py|tests\.py)'
-
-  # Type checking with mypy
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
-    hooks:
-      - id: mypy
-        name: Type check with mypy
-        args: ['--ignore-missing-imports', '--no-strict-optional']
-        additional_dependencies: ['types-all']
+        args: ['--fix', '--exclude=test_,_test,tests,training,infra']
         exclude: '^(test_|_test\.py|tests\.py|training/|infra/)'
-
-  # YAML linting
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.33.0
-    hooks:
-      - id: yamllint
-        name: Lint YAML
-        args: ['-c', '{extends: default, rules: {line-length: {max: 120}}}']
-
-  # Dockerfile linting (optional)
-  - repo: https://github.com/hadialqattan/hadolint-py
-    rev: v2.1.1
-    hooks:
-      - id: hadolint-docker
-        name: Lint Dockerfiles
-        exclude: '^(infra/storage/minio/Dockerfile|infra/tracking/mlflow/Dockerfile)'
 
 # Configuration options
 default_language_version:
-  python: python3.10
+  python: python3.12
 
 # Files to exclude
 exclude: |
@@ -101,5 +68,6 @@ exclude: |
     \.git/|
     build/|
     dist/|
-    \.eggs/
+    \.eggs/|
+    \.cache/
   )

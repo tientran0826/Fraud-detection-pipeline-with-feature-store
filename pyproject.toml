@@ -83,7 +83,7 @@ ignore_missing_imports = true
 
 [tool.pydocstyle]
 convention = "google"
-match_dir = "^(?!test_|_test\.py|tests\.py).*"
+match_dir = "^(?!test_|_test\\.py|tests\\.py).*"
 
 [tool.pytest.ini_options]
 testpaths = ["test"]
