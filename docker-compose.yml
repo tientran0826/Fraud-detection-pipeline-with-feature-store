@@ -73,6 +73,16 @@ services:
     volumes:
       - .:/app
 
+  data-simulator:
+    build:
+      context: .
+      dockerfile: ./infra/compute/data_simulator/Dockerfile
+    depends_on:
+      - kafka
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+    command: python producer.py
+
   minio:
     build:
       context: .
@@ -85,6 +95,8 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
     volumes:
       - minio_data:/data
+
+
 
   minio-init:
     image: minio/mc
