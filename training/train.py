@@ -4,6 +4,20 @@ import pandas as pd
 from xgboost import XGBClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
+import os
+from dotenv import load_dotenv
+
+load_dotenv() 
+
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
+MLFLOW_S3_ENDPOINT_URL = os.getenv("MLFLOW_S3_ENDPOINT_URL")
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+EXPERIMENT_NAME = os.getenv("MLFLOW_EXPERIMENT_NAME", "default")
+
+print(MLFLOW_TRACKING_URI)
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+mlflow.set_experiment(EXPERIMENT_NAME)
 
 df = pd.read_csv("data/creditcard.csv")
 

@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-venv/*
-=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -9,6 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
+training/data/
 # Distribution / packaging
 .Python
 build/
@@ -219,4 +217,3 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
->>>>>>> 7101f1bb2f5c71baad4a2f02052267cb27989f10
