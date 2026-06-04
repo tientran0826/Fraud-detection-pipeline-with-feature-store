@@ -276,6 +276,43 @@ docker-compose exec kafka kafka-console-consumer \
 python prefect/pipeline_orchestration.py
 ```
 
+### 6. Deploy Prefect Job to Worker
+
+Deploy your Prefect workflow to the worker pool for scheduled execution:
+
+```bash
+# Deploy the workflow to Prefect
+docker-compose exec prefect-worker prefect deploy
+
+# Or manually deploy a flow
+docker-compose exec prefect-worker prefect deploy --name "fraud-detection-pipeline"
+```
+
+**What this does:**
+- Registers the workflow with Prefect server
+- Makes it available in the Prefect UI (http://localhost:4200)
+- Enables scheduling and monitoring
+- Connects the flow to the `docker-pool` worker pool
+
+**View Prefect Dashboard:**
+```bash
+# Open in browser
+open http://localhost:4200
+```
+
+**Run deployed flow:**
+```bash
+# Trigger via CLI
+docker-compose exec prefect-worker prefect deployment run "fraud-detection-pipeline/fraud-detection-pipeline"
+
+# Or use Prefect UI to schedule and monitor
+```
+
+**Check deployment status:**
+```bash
+docker-compose exec prefect-worker prefect deployment ls
+```
+
 ## 📊 Dashboard URLs
 
 | Service | URL | Purpose |
@@ -284,6 +321,7 @@ python prefect/pipeline_orchestration.py
 | **Serving API Docs** | http://localhost:8000/docs | Interactive prediction API |
 | **Training API Docs** | http://localhost:8001/docs | Interactive training API |
 | **MLflow Tracking** | http://localhost:5000 | Experiment tracking & model registry |
+| **Prefect Server** | http://localhost:4200 | Workflow orchestration & deployment |
 | **MinIO Console** | http://localhost:9001 | Object storage management |
 | **Kafka Broker** | localhost:9092 | Kafka message broker |
 | **Redis CLI** | localhost:6379 | Feature store cache |
@@ -328,9 +366,13 @@ python prefect/pipeline_orchestration.py
 
 ### Orchestration (Prefect)
 - **File**: `prefect/pipeline_orchestration.py`
+- **Server**: Prefect Server runs on port 4200 for UI and API
+- **Worker**: Dedicated worker pool executes deployed flows
 - **Manages**: Startup sequence, health checks, monitoring
 - **Automates**: End-to-end pipeline execution
 - **Handles**: Retries with exponential backoff
+- **Deployment**: Use `docker-compose exec prefect-worker prefect deploy` to register flows
+- **Scheduling**: Configure runs via Prefect UI at http://localhost:4200
 
 ## 🧪 Testing
 
@@ -410,14 +452,14 @@ docker-compose exec redis redis-cli KEYS "*"
 
 See [PIPELINE.md](PIPELINE.md) for detailed troubleshooting guide.
 
-## 📚 Documentation
+## Documentation
 
 - **[PIPELINE.md](PIPELINE.md)** - Comprehensive architecture & setup guide
 - **[GETTING_STARTED.md](GETTING_STARTED.md)** - Quick reference card
 - **[IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md)** - Technical implementation details
 - **[DOCKER_COMMANDS.sh](DOCKER_COMMANDS.sh)** - Useful Docker commands
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -426,7 +468,7 @@ See [PIPELINE.md](PIPELINE.md) for detailed troubleshooting guide.
 5. Commit with clear messages
 6. Push and create a pull request
 
-## 📝 License
+## License
 
 ### 3. Run Flink Job
 
