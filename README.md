@@ -66,7 +66,36 @@ Event Stream
 └── README.md
 ```
 
+## Prerequisites
+
+* Docker & Docker Compose
+* Python 3.10+
+* Git
+* curl (for downloading Flink Kafka connector)
+* 4GB+ available RAM
+
 ## Setup
+
+### 0. Download Flink Kafka Connector JAR
+
+The Flink Kafka connector is required for stream processing. Download it to the Flink directory:
+
+```bash
+# Navigate to Flink compute directory
+cd infra/compute/flink
+
+# Download Flink SQL Connector for Kafka (v3.1.0 for Flink 1.18)
+curl -L -o flink-sql-connector-kafka-3.1.0-1.18.jar \
+  https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/3.1.0-1.18/flink-sql-connector-kafka-3.1.0-1.18.jar
+
+# Verify download (optional)
+ls -lh flink-sql-connector-kafka-*.jar
+
+# Return to project root
+cd ../../..
+```
+
+**Note**: This JAR file is large (~40MB) and is ignored by Git. You only need to download it once, and it will be included in the Docker image when building.
 
 ### 1. Start Infrastructure
 

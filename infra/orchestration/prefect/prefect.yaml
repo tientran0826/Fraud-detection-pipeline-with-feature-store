@@ -1,0 +1,7 @@
+name: fraud-detection
+
+deployments:
+  - name: fraud-training
+    entrypoint: flow.py:training_flow
+    work_pool:
+      name: docker-pool

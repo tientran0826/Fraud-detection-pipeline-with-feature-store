@@ -7,6 +7,10 @@ __pycache__/
 *.so
 
 training/data/
+
+# Flink Kafka Connector JAR (large binary file)
+infra/compute/flink/*.jar
+
 # Distribution / packaging
 .Python
 build/
