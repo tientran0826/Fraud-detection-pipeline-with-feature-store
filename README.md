@@ -4,6 +4,8 @@ A production-ready, end-to-end fraud detection system that simulates real-time u
 
 ## Architecture
 
+![Fraud Detection Pipeline Architecture](docs/architecture.svg)
+
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                   FRAUD DETECTION PIPELINE                  │
