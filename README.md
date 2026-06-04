@@ -49,7 +49,7 @@ Data Simulation (Kafka Producer)
 | **Data Simulation** | Kafka Producer | Generate realistic user events with anomalies |
 | **Stream Processing** | Apache Flink | Real-time event processing & transformations |
 | **Feature Engineering** | Feast + Redis | Online feature store for low-latency retrieval |
-| **REST API** | FastAPI | Serve fraud predictions with <50ms latency |
+| **REST API** | FastAPI | Serve fraud predictions |
 | **Model Training** | XGBoost + MLflow | Train models with experiment tracking |
 | **Orchestration** | Prefect | Automate data pipeline execution |
 | **Containerization** | Docker Compose | Production-ready multi-service deployment |
@@ -357,7 +357,6 @@ docker-compose exec prefect-worker prefect deployment ls
   - `GET /health` - Health check
   - `POST /predict` - Fraud prediction
   - `GET /docs` - API documentation
-- **Latency**: <50ms per prediction
 
 ### Training Pipeline
 - **File**: `training/train.py`
