@@ -3,11 +3,23 @@ import os
 import random
 import time
 from datetime import datetime, timezone
+from pathlib import Path
 
+import pandas as pd
 from kafka import KafkaProducer
 
 KAFKA_BOOTSTRAP_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 KAFKA_TOPIC = "user-events"
+DATASET_PATH = os.getenv(
+    "DATASET_PATH",
+    "data/creditcard.csv",
+)
+
+df = pd.read_csv(DATASET_PATH)
+print("Dataset loaded successfully")
+print(f"Dataset shape: {df.shape}")
+FEATURE_COLUMNS = [col for col in df.columns if col != "Class"]
+current_idx = 0
 
 
 def create_producer():
@@ -34,21 +46,16 @@ def create_producer():
 
 
 def generate_event():
-    """Generate simulated user event data"""
-    user_id = random.randint(1, 1000)
-    # Simulate varying click patterns (including anomalies)
-    base_clicks = random.randint(5, 30)
-    if random.random() < 0.05:  # 5% chance of anomaly
-        click_count = random.randint(150, 300)
-    else:
-        click_count = base_clicks
+    global current_idx
 
-    return {
-        "user_id": user_id,
-        "click_count": click_count,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "session_id": f"session_{user_id}_{int(time.time())}",
-    }
+    row = df.iloc[current_idx]
+
+    current_idx += 1
+
+    if current_idx >= len(df):
+        current_idx = 0
+
+    return {column: float(row[column]) for column in FEATURE_COLUMNS}
 
 
 def run_producer():
@@ -68,8 +75,10 @@ def run_producer():
 
             event_count += 1
             print(
-                f"📤 Event {event_count}: user_id={event['user_id']}, "
-                f"clicks={event['click_count']} → {KAFKA_TOPIC}"
+                f"📤 Event {event_count}: "
+                f"Time={event['Time']}, "
+                f"Amount={event['Amount']} "
+                f"→ {KAFKA_TOPIC}"
             )
 
             # Wait 2 seconds before next event

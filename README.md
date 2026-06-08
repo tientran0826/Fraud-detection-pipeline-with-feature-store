@@ -366,6 +366,7 @@ docker-compose exec prefect-worker prefect deployment ls
 - **API**: `training/api.py` for remote training
 
 ### Orchestration (Prefect)
+- **Setup and Flow folder**: `infra/orchestration/prefect`
 - **Server**: Prefect Server runs on port 4200 for UI and API
 - **Worker**: Dedicated worker pool executes deployed flows
 - **Manages**: Startup sequence, health checks, monitoring
