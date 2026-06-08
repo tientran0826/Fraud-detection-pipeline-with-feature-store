@@ -1,7 +1,7 @@
 from fraud_detection.features.engineering import build_features
 from fraud_detection.models.xgboost_factory import create_model
 from fraud_detection.schemas.creditcard import CreditCardSchema
-from fraud_detection.utils.schema_validator import validate_columns
+from fraud_detection.utils.schema_validator import validate_columns, validate_schema
 from sklearn.metrics import average_precision_score, roc_auc_score
 from sklearn.model_selection import train_test_split
 
@@ -14,9 +14,9 @@ class Trainer:
         request,
     ):
 
-        validate_columns(
+        validate_schema(
             df,
-            CreditCardSchema.REQUIRED_COLUMNS,
+            CreditCardSchema,
         )
 
         df = build_features(df)
