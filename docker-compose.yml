@@ -170,7 +170,11 @@ services:
 
     volumes:
       - ./infra/orchestration/prefect:/app
-    command: prefect worker start --pool docker-pool
+    command: >
+      sh -c "
+      sleep 20 &&
+      prefect worker start --pool docker-pool
+      "
     depends_on:
       - prefect-server
 
