@@ -2,14 +2,16 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# Copy all training files
-COPY training/requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt .
 
-COPY training/train.py ./train.py
-COPY training/api.py ./api.py
-COPY training/schemas.py ./schemas.py
-COPY training/__init__.py ./__init__.py
-COPY training/data/ ./data/
+RUN pip install \
+    --no-cache-dir \
+    -r requirements.txt
 
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8001"]
+COPY training/src ./src
+
+COPY training/data ./data
+
+ENV PYTHONPATH=/app/src
+
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8001"]

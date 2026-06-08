@@ -1,10 +1,12 @@
 from pydantic import BaseModel
 
 
-class TrainRequest(BaseModel):
-    dataset_path: str
-
-
 class TrainResponse(BaseModel):
+
     run_id: str
-    auc: float
+
+    experiment_id: str
+
+    roc_auc: float
+
+    pr_auc: float
